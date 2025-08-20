@@ -7,14 +7,24 @@ import org.springframework.stereotype.Service;
 
 import com.fernando.wksmongo.domain.User;
 import com.fernando.wksmongo.repositories.UserRepoitory;
+import com.fernando.wksmongo.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class UserService {
 
     @Autowired
-    private UserRepoitory repoitory;
+    private UserRepoitory repository;
 
     public List<User> findAll(){
-        return repoitory.findAll();
+        return repository.findAll();
+    }
+
+    public User findById(String id){
+        //se não houver usuario, retorna nulo
+        User user = repository.findById(id).orElse(null);
+        if(user == null){
+           throw new ObjectNotFoundException("Objeto não encontrado") ;
+        }
+        return user;
     }
 }
