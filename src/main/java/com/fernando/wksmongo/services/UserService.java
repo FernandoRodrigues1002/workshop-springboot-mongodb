@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fernando.wksmongo.domain.User;
+import com.fernando.wksmongo.dto.UserDTO;
 import com.fernando.wksmongo.repositories.UserRepoitory;
 import com.fernando.wksmongo.services.exceptions.ObjectNotFoundException;
 
@@ -26,5 +27,13 @@ public class UserService {
            throw new ObjectNotFoundException("Objeto não encontrado") ;
         }
         return user;
+    }
+
+    public User insert(User obj){
+        return repository.insert(obj);
+    }
+
+    public User fromDto(UserDTO objDto){
+        return new User(objDto.getId(), objDto.getName(), objDto.getEmail());
     }
 }
