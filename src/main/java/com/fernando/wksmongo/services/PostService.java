@@ -1,6 +1,8 @@
 package com.fernando.wksmongo.services;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,10 @@ public class PostService {
             throw new ObjectNotFoundException("Objeto não encontrado");
         }
         return post;
+    }
+
+    public List<Post> findByTitle(String text){
+        return repository.findByTitleContainingIgnoreCase(text);
     }
 
 }
