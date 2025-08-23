@@ -28,21 +28,21 @@ public class UserResource {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<UserDTO>> findAll() {
         List<User> list = service.findAll();
-		List<UserDTO> listDto =  list.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
+        List<UserDTO> listDto = list.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
         return ResponseEntity.ok().body(listDto);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value="/{id}")
-    public ResponseEntity<UserDTO> findById(@PathVariable String id){
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
+    public ResponseEntity<UserDTO> findById(@PathVariable String id) {
         User user = service.findById(id);
         return ResponseEntity.ok().body(new UserDTO(user));
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> insert(@RequestBody UserDTO objDto){
+    public ResponseEntity<Void> insert(@RequestBody UserDTO objDto) {
         User obj = service.fromDto(objDto);
         obj = service.insert(obj);
-        
+
         //Vai retornar o caminho com o id do usuario criado
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 
@@ -50,9 +50,19 @@ public class UserResource {
         return ResponseEntity.created(uri).build();
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value="/{id}")
-    public ResponseEntity<Void> delete(@PathVariable String id){
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable String id) {
         service.delete(id);
+
+        //Reposta quando não retorna nada é 204 (No content)
+        return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
+    public ResponseEntity<Void> update(@RequestBody UserDTO objDto, @PathVariable String id) {
+        User obj = service.fromDto(objDto);
+        obj.setId(id);
+        obj = service.update(obj);
 
         //Reposta quando não retorna nada é 204 (No content)
         return ResponseEntity.noContent().build();
