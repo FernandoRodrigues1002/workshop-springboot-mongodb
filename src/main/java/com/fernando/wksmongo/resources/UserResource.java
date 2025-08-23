@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.fernando.wksmongo.domain.Post;
 import com.fernando.wksmongo.domain.User;
 import com.fernando.wksmongo.dto.UserDTO;
 import com.fernando.wksmongo.services.UserService;
@@ -67,4 +68,12 @@ public class UserResource {
         //Reposta quando não retorna nada é 204 (No content)
         return ResponseEntity.noContent().build();
     }
+
+    //Buscando os Posts de um usuario
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+        User user = service.findById(id);
+        return ResponseEntity.ok().body(user.getPosts());
+    }
+
 }
