@@ -7,14 +7,14 @@ import org.springframework.stereotype.Service;
 
 import com.fernando.wksmongo.domain.User;
 import com.fernando.wksmongo.dto.UserDTO;
-import com.fernando.wksmongo.repositories.UserRepoitory;
+import com.fernando.wksmongo.repositories.UserRepository;
 import com.fernando.wksmongo.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class UserService {
 
     @Autowired
-    private UserRepoitory repository;
+    private UserRepository repository;
 
     public List<User> findAll(){
         return repository.findAll();
