@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import com.fernando.wksmongo.domain.Post;
 import com.fernando.wksmongo.domain.User;
 import com.fernando.wksmongo.dto.AuthorDTO;
+import com.fernando.wksmongo.dto.CommentDTO;
 import com.fernando.wksmongo.repositories.PostRepository;
 import com.fernando.wksmongo.repositories.UserRepository;
 
@@ -39,7 +40,13 @@ public class Instantiation implements CommandLineRunner {
 
         userRepository.saveAll(Arrays.asList(maria, alex, bob));
 
-        Post post1 = new Post(null, sdf.parse("21/03/2008"), "Partiu viagem", "Vou viajar", new AuthorDTO (maria) );
+        Post post1 = new Post(null, sdf.parse("21/03/2025"), "Partiu viagem", "Vou viajar", new AuthorDTO (maria) );
+
+        CommentDTO c1 = new CommentDTO("Boa viagem", sdf.parse("21/03/2025"), new AuthorDTO(alex));
+        CommentDTO c2 = new CommentDTO("Aproveita!", sdf.parse("21/03/2025"), new AuthorDTO(alex));
+        CommentDTO c3 = new CommentDTO("Boa viagem", sdf.parse("21/03/2025"), new AuthorDTO(bob));
+
+        post1.getComments().addAll(Arrays.asList(c1, c2, c3));
 
        postRepository.saveAll(Arrays.asList(post1));
 
